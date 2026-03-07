@@ -213,6 +213,46 @@
   .course-color-2 { background: linear-gradient(135deg, #4FACFE 0%, #00F2FE 100%); }
   .course-color-3 { background: linear-gradient(135deg, #43E97B 0%, #38F9D7 100%); }
   .course-color-4 { background: linear-gradient(135deg, #FA709A 0%, #FEE140 100%); }
+  .course-color-5 { background: linear-gradient(135deg, #A18CD1 0%, #FBC2EB 100%); }
+
+  /* AI Chat Panel */
+  .chat-panel { display: flex; flex-direction: column; width: 340px; border-left: 1px solid var(--gray-200); background: white; flex-shrink: 0; }
+  .chat-header { padding: 12px 16px; background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%); color: white; display: flex; align-items: center; justify-content: space-between; }
+  .chat-header h4 { font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+  .chat-header .chat-status { font-size: 11px; opacity: 0.8; }
+  .chat-toggle-btn { background: none; border: 1px solid rgba(255,255,255,0.3); color: white; border-radius: 6px; padding: 4px 10px; font-size: 12px; cursor: pointer; }
+  .chat-toggle-btn:hover { background: rgba(255,255,255,0.15); }
+  .chat-messages { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 10px; min-height: 0; }
+  .chat-msg { max-width: 90%; padding: 10px 14px; border-radius: 14px; font-size: 13px; line-height: 1.5; word-wrap: break-word; }
+  .chat-msg.user { align-self: flex-end; background: var(--primary); color: white; border-bottom-right-radius: 4px; }
+  .chat-msg.assistant { align-self: flex-start; background: var(--gray-100); color: var(--gray-800); border-bottom-left-radius: 4px; }
+  .chat-msg.system { align-self: center; background: #EEF2FF; color: var(--primary-dark); font-size: 12px; text-align: center; border-radius: 10px; padding: 8px 14px; }
+  .chat-msg.assistant .msg-label { font-size: 10px; font-weight: 600; color: var(--primary); margin-bottom: 4px; display: flex; align-items: center; gap: 4px; }
+  .chat-msg.loading .dot-pulse { display: inline-flex; gap: 4px; }
+  .chat-msg.loading .dot-pulse span { width: 6px; height: 6px; background: var(--gray-400); border-radius: 50%; animation: dotPulse 1.2s ease-in-out infinite; }
+  .chat-msg.loading .dot-pulse span:nth-child(2) { animation-delay: 0.2s; }
+  .chat-msg.loading .dot-pulse span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes dotPulse { 0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); } 40% { opacity: 1; transform: scale(1); } }
+  .chat-input-area { padding: 10px 12px; border-top: 1px solid var(--gray-200); display: flex; gap: 8px; }
+  .chat-input { flex: 1; padding: 8px 12px; border: 2px solid var(--gray-200); border-radius: 20px; font-size: 13px; outline: none; font-family: inherit; }
+  .chat-input:focus { border-color: var(--primary-light); }
+  .chat-send-btn { width: 36px; height: 36px; border-radius: 50%; background: var(--primary); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; transition: background 0.15s; flex-shrink: 0; }
+  .chat-send-btn:hover { background: var(--primary-dark); }
+  .chat-send-btn:disabled { background: var(--gray-300); cursor: not-allowed; }
+  .chat-collapsed { width: 48px; display: flex; flex-direction: column; align-items: center; justify-content: center; border-left: 1px solid var(--gray-200); background: var(--gray-50); cursor: pointer; transition: background 0.15s; }
+  .chat-collapsed:hover { background: #EEF2FF; }
+  .chat-collapsed .chat-collapsed-icon { font-size: 20px; }
+  .chat-collapsed .chat-collapsed-label { writing-mode: vertical-rl; text-orientation: mixed; font-size: 11px; font-weight: 600; color: var(--primary); margin-top: 8px; }
+  .chat-no-key { padding: 20px; text-align: center; color: var(--gray-400); font-size: 13px; }
+  .chat-no-key a { color: var(--primary); cursor: pointer; text-decoration: underline; }
+
+  /* Settings modal extras */
+  .settings-section { margin-bottom: 20px; padding: 16px; background: var(--gray-50); border-radius: 10px; border: 1px solid var(--gray-200); }
+  .settings-section h4 { font-size: 14px; color: var(--gray-700); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+
+  /* Editor container with chat */
+  .editor-with-chat { display: flex; height: calc(100vh - 200px); min-height: 400px; border: 1px solid var(--gray-200); border-radius: 12px; overflow: hidden; background: white; }
+  .editor-main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
 
   .mobile-menu-btn { display: none; position: fixed; top: 16px; left: 16px; z-index: 101; background: white; border: 1px solid var(--gray-200); border-radius: 8px; padding: 8px 12px; font-size: 20px; cursor: pointer; }
   @media (max-width: 768px) { .mobile-menu-btn { display: block; } }
@@ -338,11 +378,87 @@ function getDefaultData() {
             ]
           }
         ]
+      },
+      {
+        id: 'course3',
+        title: 'Introduction to AI',
+        description: 'Discover how artificial intelligence works and learn to use it as a creative tool!',
+        colorIndex: 5,
+        icon: '🤖',
+        teacherId: 'teacher1',
+        enrolledStudents: ['student1', 'student2', 'student3'],
+        modules: [
+          {
+            id: 'mod5',
+            title: 'What is AI?',
+            order: 0,
+            lessons: [
+              { id: 'les10', title: 'AI is All Around Us', type: 'text', order: 0, content: 'You probably use AI every single day without even knowing it! Here are some examples:\n\n• When you ask Siri or Alexa a question, AI figures out what you said and finds an answer\n• When YouTube recommends videos you might like, that\'s AI learning your interests\n• When your phone autocorrects your texts, AI is predicting what word you\'re trying to type\n• When you use a photo filter that changes your face, AI is detecting where your eyes, nose, and mouth are\n\nBut what IS artificial intelligence really? AI is a computer program that can learn from data and make decisions or predictions. Unlike regular programs that follow exact rules (like "if the player presses jump, move the character up"), AI programs learn patterns from lots of examples and use those patterns to handle new situations.\n\nThink of it like this: if you wanted to teach a regular program to recognize cats, you\'d have to write rules like "if it has pointy ears AND whiskers AND fur, it\'s a cat." But with AI, you show it thousands of cat pictures, and it figures out the patterns on its own!' },
+              { id: 'les11', title: 'Talk to an AI!', type: 'code', order: 1, language: 'javascript', starterCode: '// Welcome to your first AI experiment!\n// Use the CodeBuddy chat panel on the right →\n// to have a conversation with an AI.\n//\n// Try these prompts and write down what happens:\n//\n// 1. Ask: "What is artificial intelligence?"\n// 2. Ask: "Can you explain AI like I\'m 12?"\n// 3. Ask: "What\'s 2+2?" then ask "What\'s the meaning of life?"\n//\n// After trying those, write your observations below:\n\nconsole.log("=== My AI Observations ===")\n\n// What did you notice about how the AI responds?\nconsole.log("Observation 1: ")\n\n// Did it always give the same kind of answer?\nconsole.log("Observation 2: ")\n\n// What surprised you?\nconsole.log("Observation 3: ")\n',
+                instructions: 'In this lesson, you\'ll have your first real conversation with an AI!\n\nOpen the CodeBuddy chat panel on the right side of the screen. Try the prompts listed in the code, then write your observations using console.log().\n\nThings to notice:\n• Does the AI understand your questions?\n• Does it sometimes say things that seem wrong?\n• How is talking to AI different from searching Google?',
+                showResults: 'immediate',
+                testCases: [
+                  { id: 'tc20', description: 'Wrote at least one observation', type: 'contains', expectedOutput: 'Observation 1:', points: 3 },
+                  { id: 'tc21', description: 'Wrote a second observation', type: 'contains', expectedOutput: 'Observation 2:', points: 3 },
+                  { id: 'tc22', description: 'Program runs without errors', type: 'contains', expectedOutput: 'AI Observations', points: 4 },
+                ]
+              },
+              { id: 'les12', title: 'How Does AI "Learn"?', type: 'text', order: 2, content: 'AI doesn\'t learn the way you do. You can see a cat once and know what a cat is forever. AI needs to see THOUSANDS of examples!\n\nHere\'s how it works:\n\n1. TRAINING DATA: First, humans collect tons of examples. To teach AI to recognize dogs, you\'d need thousands of dog photos, each labeled "this is a dog."\n\n2. FINDING PATTERNS: The AI looks at all those examples and finds patterns. Maybe it notices that dogs usually have four legs, a tail, and a snout. It figures this out through math — lots and lots of math!\n\n3. MAKING PREDICTIONS: Now when you show it a NEW photo it\'s never seen before, it uses those patterns to guess: "This looks 95% like a dog!"\n\n4. GETTING BETTER: If it gets something wrong, it adjusts. This is like when you miss a question on a test and study that topic more.\n\nImportant: AI doesn\'t actually "understand" anything. It\'s really good at finding patterns in data, but it doesn\'t know what a dog IS the way you do. It\'s more like a very powerful pattern-matching machine.\n\nThis is why AI can sometimes be confidently wrong — it found a pattern that doesn\'t actually make sense!' },
+            ]
+          },
+          {
+            id: 'mod6',
+            title: 'Prompt Engineering',
+            order: 1,
+            lessons: [
+              { id: 'les13', title: 'What Makes a Good Prompt?', type: 'text', order: 0, content: 'When you talk to an AI, what you type is called a "prompt." The quality of the AI\'s response depends a LOT on how you write your prompt. This skill is called prompt engineering!\n\nHere are the key rules:\n\n1. BE SPECIFIC: Instead of "Tell me about space," try "Explain how black holes form in 3 simple sentences for a middle school student."\n\n2. GIVE CONTEXT: Tell the AI who you are and what you need. "I\'m a 7th grader working on a science project about..." gives much better results than just asking a question.\n\n3. SET THE FORMAT: Tell the AI how you want the answer. "Give me a numbered list," "Explain in one paragraph," or "Use simple words" all help.\n\n4. USE EXAMPLES: "Write a haiku. Example: An old silent pond / A frog jumps into the pond / Splash! Silence again." Showing what you want helps a lot!\n\n5. ITERATE: If the first response isn\'t right, don\'t give up! Ask follow-up questions or say "That\'s too complicated, can you make it simpler?"' },
+              { id: 'les14', title: 'Prompt Challenge!', type: 'code', order: 1, language: 'javascript', starterCode: '// PROMPT ENGINEERING CHALLENGE!\n// Use CodeBuddy (the chat panel →) to test different prompts.\n// For each challenge, write your BEST prompt and the result.\n\n// Challenge 1: Get the AI to explain photosynthesis\n// using only words a 5-year-old would understand\nconsole.log("=== Challenge 1: Explain Like I\'m 5 ===")\nconsole.log("My prompt: ")\nconsole.log("AI said: ")\n\n// Challenge 2: Get the AI to write a 4-line poem\n// about your favorite food\nconsole.log("\\n=== Challenge 2: Food Poem ===")\nconsole.log("My prompt: ")\nconsole.log("AI said: ")\n\n// Challenge 3: Get the AI to give you 3 fun facts\n// about an animal of your choice, numbered 1-2-3\nconsole.log("\\n=== Challenge 3: Animal Facts ===")\nconsole.log("My prompt: ")\nconsole.log("AI said: ")\n',
+                instructions: 'Time to practice your prompt engineering skills!\n\nUse CodeBuddy to try different prompts for each challenge. Your goal is to get the BEST possible response by crafting clear, specific prompts.\n\nFor each challenge, write down:\n1. The prompt you used\n2. What the AI said (summarize it)\n\nTips: Be specific! Tell the AI the format you want. Give it context.',
+                showResults: 'immediate',
+                testCases: [
+                  { id: 'tc23', description: 'Completed Challenge 1', type: 'contains', expectedOutput: 'Challenge 1', points: 3 },
+                  { id: 'tc24', description: 'Completed Challenge 2', type: 'contains', expectedOutput: 'Challenge 2', points: 3 },
+                  { id: 'tc25', description: 'Completed Challenge 3', type: 'contains', expectedOutput: 'Challenge 3', points: 4 },
+                ]
+              },
+              { id: 'les15', title: 'AI as Your Coding Helper', type: 'code', order: 2, language: 'javascript', starterCode: '// AI AS A CODING HELPER\n// In this lesson, you\'ll use CodeBuddy to help you\n// write a real program — but YOU do the thinking!\n//\n// TASK: Create a simple tip calculator\n// Input: meal cost and tip percentage\n// Output: the tip amount and total bill\n//\n// Rules:\n// 1. Try writing it yourself first!\n// 2. If stuck, ask CodeBuddy for a HINT (not the answer)\n// 3. If you get an error, paste it in the chat and ask for help\n\nfunction calculateTip(mealCost, tipPercent) {\n  // Your code here!\n  \n}\n\n// Test your function:\nconsole.log("Meal: $25.00, Tip: 20%")\nconsole.log("Tip amount: $" + calculateTip(25, 20))\nconsole.log("Total: $" + (25 + calculateTip(25, 20)))\n\nconsole.log("\\nMeal: $50.00, Tip: 15%")\nconsole.log("Tip amount: $" + calculateTip(50, 15))\nconsole.log("Total: $" + (50 + calculateTip(50, 15)))\n',
+                instructions: 'Now let\'s use AI the right way — as a helper, not a replacement for your own thinking!\n\nYour task: Write a tip calculator function. Try it yourself first, then use CodeBuddy if you get stuck.\n\nGood ways to use AI:\n• "I\'m trying to calculate a percentage in JavaScript, can you give me a hint?"\n• "I got this error: [paste error]. What does it mean?"\n• "Is my approach right? I\'m thinking of multiplying the cost by..."\n\nBad ways to use AI:\n• "Write me a tip calculator" (that\'s cheating!)\n• "Give me the answer"',
+                showResults: 'immediate',
+                testCases: [
+                  { id: 'tc26', description: 'calculateTip(25, 20) returns 5', type: 'output', expectedOutput: 'Meal: $25.00, Tip: 20%\nTip amount: $5\nTotal: $30\n\nMeal: $50.00, Tip: 15%\nTip amount: $7.5\nTotal: $57.5', points: 5 },
+                  { id: 'tc27', description: 'Output contains tip amount', type: 'contains', expectedOutput: 'Tip amount:', points: 3 },
+                  { id: 'tc28', description: 'Output contains total', type: 'contains', expectedOutput: 'Total:', points: 2 },
+                ]
+              },
+            ]
+          },
+          {
+            id: 'mod7',
+            title: 'AI Ethics & Responsibility',
+            order: 2,
+            lessons: [
+              { id: 'les16', title: 'Can AI Be Wrong?', type: 'text', order: 0, content: 'Yes! AI can absolutely be wrong, and understanding this is one of the most important things you\'ll learn.\n\nHere are some ways AI can mess up:\n\nHALLUCINATIONS: Sometimes AI just... makes stuff up. It might tell you a "fact" that sounds real but is totally invented. This is called a hallucination. If you asked an AI "Who won the 1987 Super Bowl of Tennis?" it might confidently give you an answer — even though there\'s no such thing as the Super Bowl of Tennis!\n\nBIAS: AI learns from data created by humans, and humans have biases. If an AI was trained mostly on data from one group of people, it might not work well for everyone. For example, early facial recognition AI worked much better on lighter skin tones because that\'s what most of the training photos showed.\n\nCONTEXT MISTAKES: AI can miss context that\'s obvious to humans. If you type "I\'m so cold I could die," a human knows you\'re exaggerating. An AI might take it literally.\n\nOUTDATED INFO: AI models are trained on data up to a certain date. They might not know about things that happened recently.\n\nThe lesson? ALWAYS think critically about AI\'s answers. Use it as a starting point, then verify important information yourself!' },
+              { id: 'les17', title: 'Using AI Responsibly', type: 'text', order: 1, content: 'Now that you know how to use AI, let\'s talk about using it the RIGHT way.\n\nDO use AI to:\n• Help you understand concepts you\'re learning\n• Get unstuck when you hit a wall in your code\n• Brainstorm ideas and get creative inspiration\n• Check your work and find mistakes\n• Learn new things you\'re curious about\n\nDON\'T use AI to:\n• Do your homework for you (that\'s like having someone else exercise for you — YOU don\'t get stronger)\n• Copy answers and pretend they\'re yours (that\'s dishonest)\n• Make important decisions without checking the facts\n• Spread information without verifying it first\n• Bully, trick, or hurt other people\n\nTHINK OF AI LIKE A CALCULATOR:\nA calculator is an amazing tool for math class. But if you use it for every single problem without understanding what it\'s doing, you\'ll never actually learn math. The same is true for AI — it\'s a tool that makes you MORE powerful, but only if you understand what it\'s doing.\n\nThe best AI users aren\'t the ones who rely on it the most. They\'re the ones who know WHEN to use it and WHEN to think for themselves.' },
+              { id: 'les18', title: 'AI Ethics Reflection', type: 'code', order: 2, language: 'javascript', starterCode: '// AI ETHICS REFLECTION\n// Think about what you\'ve learned and share your thoughts!\n\nconsole.log("=== My AI Ethics Reflection ===")\n\n// 1. Name one way AI could be used to help people:\nconsole.log("AI can help people by: ")\n\n// 2. Name one risk or danger of AI:\nconsole.log("One risk of AI is: ")\n\n// 3. If you could build any AI tool, what would it do?\nconsole.log("I would build an AI that: ")\n\n// 4. What\'s the most important rule for using AI responsibly?\nconsole.log("The most important rule is: ")\n\n// 5. How will YOU use AI in your learning going forward?\nconsole.log("I plan to use AI by: ")\n',
+                instructions: 'Final reflection! Think about everything you\'ve learned about AI in this course and write thoughtful answers to each question.\n\nThere are no "wrong" answers here — this is about YOUR thinking. Be honest and specific.\n\nYou CAN use CodeBuddy to discuss these questions, but your answers should be in your own words!',
+                showResults: 'immediate',
+                testCases: [
+                  { id: 'tc29', description: 'Answered question about helping people', type: 'contains', expectedOutput: 'AI can help people by:', points: 2 },
+                  { id: 'tc30', description: 'Answered question about risks', type: 'contains', expectedOutput: 'One risk of AI is:', points: 2 },
+                  { id: 'tc31', description: 'Described an AI tool idea', type: 'contains', expectedOutput: 'I would build an AI that:', points: 2 },
+                  { id: 'tc32', description: 'Stated a responsibility rule', type: 'contains', expectedOutput: 'The most important rule is:', points: 2 },
+                  { id: 'tc33', description: 'Shared personal learning plan', type: 'contains', expectedOutput: 'I plan to use AI by:', points: 2 },
+                ]
+              },
+            ]
+          }
+        ]
       }
     ],
     announcements: [
       { id: 'ann1', courseId: 'course1', title: 'Welcome to Python!', content: 'Welcome everyone! Please complete the first module by Friday. Don\'t forget to run your code before submitting!', date: '2026-03-01', teacherId: 'teacher1' },
       { id: 'ann2', courseId: 'course1', title: 'Office Hours This Week', content: 'I\'ll be available for extra help on Wednesday 3-5pm. Bring your questions about loops!', date: '2026-03-04', teacherId: 'teacher1' },
+      { id: 'ann3', courseId: 'course3', title: 'New Course: Intro to AI!', content: 'Excited to launch our brand new AI course! Make sure to use the CodeBuddy chat panel when you get to the coding assignments — it\'s your personal AI learning helper!', date: '2026-03-05', teacherId: 'teacher1' },
     ],
     progress: {
       student1: { les1: { completed: true, completedAt: '2026-03-02' }, les2: { completed: true, completedAt: '2026-03-03', code: 'print("Hello, World!")', grade: 95, feedback: 'Great job!' } },
@@ -565,6 +681,175 @@ function autoGrade(code, testCases, language) {
   return { results, totalEarned, totalPossible, percentage };
 }
 
+// ─── Gemini API Integration ───
+async function callGemini(apiKey, messages, systemPrompt) {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+  const contents = [];
+  // Add system instruction as first user/model pair if present
+  for (const msg of messages) {
+    contents.push({
+      role: msg.role === 'assistant' ? 'model' : 'user',
+      parts: [{ text: msg.text }],
+    });
+  }
+  const body = {
+    contents,
+    systemInstruction: systemPrompt ? { parts: [{ text: systemPrompt }] } : undefined,
+    generationConfig: {
+      temperature: 0.7,
+      maxOutputTokens: 600,
+      topP: 0.9,
+    },
+    safetySettings: [
+      { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_ONLY_HIGH' },
+      { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_ONLY_HIGH' },
+      { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_ONLY_HIGH' },
+      { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_ONLY_HIGH' },
+    ],
+  };
+  const resp = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+  if (!resp.ok) {
+    const err = await resp.text();
+    throw new Error(`Gemini API error (${resp.status}): ${err}`);
+  }
+  const data = await resp.json();
+  const candidate = data.candidates?.[0];
+  if (!candidate || !candidate.content?.parts?.[0]?.text) {
+    throw new Error('No response from Gemini');
+  }
+  return candidate.content.parts[0].text;
+}
+
+function buildSystemPrompt(lesson, course, studentCode) {
+  const base = `You are CodeBuddy, a friendly and encouraging AI learning assistant for middle school students (ages 11-14) learning computer science at CreateALoop, a nonprofit CS education program.
+
+IMPORTANT RULES:
+- Use simple, clear language appropriate for middle schoolers
+- Be encouraging and positive — celebrate what students get right
+- NEVER give away the full answer to an assignment. Instead, give hints, ask guiding questions, and help students figure it out themselves
+- If a student asks for the answer directly, say something like "I'd love to help you figure this out! Let me give you a hint instead..."
+- If a student goes off-topic, gently redirect: "That's a fun question! But let's focus on [topic] for now. What do you need help with on this assignment?"
+- Keep responses short (2-4 sentences usually) — don't overwhelm with walls of text
+- Use analogies and real-world examples kids can relate to
+- If a student seems frustrated, be extra encouraging and break the problem into smaller steps
+- You can use simple emoji occasionally to be friendly 😊`;
+
+  let context = '';
+  if (course) context += `\nThe student is taking the course "${course.title}".`;
+  if (lesson) {
+    context += `\nThey are currently on the lesson "${lesson.title}".`;
+    if (lesson.type === 'code') {
+      context += `\nThis is a coding assignment in ${lesson.language || 'Python'}.`;
+      if (lesson.instructions) context += `\nThe assignment instructions are: ${lesson.instructions}`;
+      if (lesson.starterCode) context += `\nThe starter code is:\n${lesson.starterCode}`;
+    } else if (lesson.content) {
+      context += `\nThis is a reading lesson. The content covers: ${lesson.content.substring(0, 300)}...`;
+    }
+  }
+  if (studentCode) context += `\nThe student's current code is:\n\`\`\`\n${studentCode}\n\`\`\``;
+
+  return base + context;
+}
+
+// ─── API Key Storage ───
+function getApiKey() {
+  try { return localStorage.getItem('codepath_gemini_key') || ''; } catch(e) { return ''; }
+}
+function setApiKey(key) {
+  try { localStorage.setItem('codepath_gemini_key', key); } catch(e) {}
+}
+
+// ─── ChatPanel Component ───
+function ChatPanel({ lesson, course, studentCode, collapsed, onToggle }) {
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [apiKey, setApiKeyState] = useState(getApiKey);
+  const messagesEndRef = useRef(null);
+  const prevLessonId = useRef(null);
+
+  // Reset chat when lesson changes
+  useEffect(() => {
+    if (lesson && lesson.id !== prevLessonId.current) {
+      prevLessonId.current = lesson.id;
+      setMessages([{
+        role: 'system',
+        text: `Hi! I'm CodeBuddy 🤖 — your AI learning helper for "${lesson.title}". Ask me anything about this lesson!`,
+      }]);
+    }
+  }, [lesson?.id]);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
+  async function sendMessage() {
+    if (!input.trim() || loading) return;
+    const userMsg = { role: 'user', text: input.trim() };
+    setMessages(prev => [...prev, userMsg]);
+    setInput('');
+    setLoading(true);
+
+    try {
+      const chatHistory = [...messages.filter(m => m.role !== 'system'), userMsg];
+      const systemPrompt = buildSystemPrompt(lesson, course, studentCode);
+      const response = await callGemini(apiKey, chatHistory, systemPrompt);
+      setMessages(prev => [...prev, { role: 'assistant', text: response }]);
+    } catch(e) {
+      setMessages(prev => [...prev, { role: 'assistant', text: `Oops! I ran into an error: ${e.message}. Make sure the API key is set correctly in Settings.` }]);
+    }
+    setLoading(false);
+  }
+
+  if (collapsed) {
+    return React.createElement('div', { className: 'chat-collapsed', onClick: onToggle },
+      React.createElement('span', { className: 'chat-collapsed-icon' }, '🤖'),
+      React.createElement('span', { className: 'chat-collapsed-label' }, 'CodeBuddy'),
+    );
+  }
+
+  return React.createElement('div', { className: 'chat-panel' },
+    React.createElement('div', { className: 'chat-header' },
+      React.createElement('h4', null, '🤖 CodeBuddy'),
+      React.createElement('button', { className: 'chat-toggle-btn', onClick: onToggle }, '✕'),
+    ),
+
+    !apiKey
+      ? React.createElement('div', { className: 'chat-no-key' },
+          React.createElement('div', { style: { fontSize: '28px', marginBottom: '12px' } }, '🔑'),
+          React.createElement('p', null, 'An API key is needed to power CodeBuddy.'),
+          React.createElement('p', { style: { marginTop: '8px' } }, 'Teachers can add one in the ', React.createElement('strong', null, '⚙️ Settings'), ' page in the sidebar.'),
+        )
+      : React.createElement('div', { className: 'chat-messages' },
+          messages.map((msg, i) =>
+            React.createElement('div', { key: i, className: `chat-msg ${msg.role}` },
+              msg.role === 'assistant' && React.createElement('div', { className: 'msg-label' }, '🤖 CodeBuddy'),
+              msg.text,
+            )
+          ),
+          loading && React.createElement('div', { className: 'chat-msg assistant loading' },
+            React.createElement('div', { className: 'msg-label' }, '🤖 CodeBuddy'),
+            React.createElement('div', { className: 'dot-pulse' },
+              React.createElement('span', null), React.createElement('span', null), React.createElement('span', null),
+            ),
+          ),
+          React.createElement('div', { ref: messagesEndRef }),
+        ),
+
+    apiKey && React.createElement('div', { className: 'chat-input-area' },
+      React.createElement('input', {
+        className: 'chat-input',
+        value: input,
+        onChange: e => setInput(e.target.value),
+        onKeyDown: e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } },
+        placeholder: 'Ask CodeBuddy...',
+        disabled: loading,
+      }),
+      React.createElement('button', { className: 'chat-send-btn', onClick: sendMessage, disabled: loading || !input.trim() }, '➤'),
+    ),
+  );
+}
+
 // ─── CodeEditor Component ───
 function CodeEditorComponent({ code, onChange, language, readOnly }) {
   const editorRef = useRef(null);
@@ -619,6 +904,8 @@ function App() {
   const [codeOutput, setCodeOutput] = useState([]);
   const [loginName, setLoginName] = useState('');
   const [loginRole, setLoginRole] = useState('');
+  const [chatCollapsed, setChatCollapsed] = useState(false);
+  const [settingsApiKey, setSettingsApiKey] = useState(getApiKey);
 
   // Save on data change
   useEffect(() => { saveData(data); }, [data]);
@@ -808,6 +1095,7 @@ function App() {
     { id: 'gradebook', icon: '📝', label: 'Gradebook' },
     { id: 'students', icon: '👥', label: 'Students' },
     { id: 'announcements', icon: '📢', label: 'Announcements' },
+    { id: 'settings', icon: '⚙️', label: 'Settings' },
   ] : [
     { id: 'dashboard', icon: '🏠', label: 'Dashboard' },
     { id: 'courses', icon: '📚', label: 'My Courses' },
@@ -908,7 +1196,8 @@ function App() {
           React.createElement('h1', null, les.title),
           React.createElement('p', null, selectedCourse.title, ' • ', selectedCourse.modules.find(m => m.lessons.some(l => l.id === les.id))?.title),
         ),
-        React.createElement('div', { className: 'editor-container' },
+        React.createElement('div', { className: 'editor-with-chat' },
+          React.createElement('div', { className: 'editor-main' },
           React.createElement('div', { className: 'editor-toolbar' },
             React.createElement('span', { className: 'lang-badge' }, les.language === 'python' ? '🐍 Python' : les.language === 'htmlmixed' ? '🌐 HTML' : '📜 JavaScript'),
             hasTestCases && React.createElement('span', { style: { color: 'var(--gray-400)', fontSize: '12px' } }, '🧪 ', les.testCases.length, ' test case', les.testCases.length !== 1 ? 's' : ''),
@@ -1011,7 +1300,15 @@ function App() {
                   line.type === 'error' ? '❌ ' : line.type === 'success' ? '✅ ' : '› ', line.text
                 ))
           )
-        )
+        ), // end editor-main
+        React.createElement(ChatPanel, {
+          lesson: les,
+          course: selectedCourse,
+          studentCode: editorCode,
+          collapsed: chatCollapsed,
+          onToggle: () => setChatCollapsed(prev => !prev),
+        })
+        ) // end editor-with-chat
       );
     }
   }
@@ -1354,6 +1651,50 @@ function App() {
     );
   }
 
+  // ─── Settings (Teacher) ───
+  function renderSettings() {
+    return React.createElement('div', null,
+      React.createElement('div', { className: 'page-header' },
+        React.createElement('h1', null, 'Settings'),
+        React.createElement('p', null, 'Configure your LMS platform.'),
+      ),
+      React.createElement('div', { className: 'settings-section' },
+        React.createElement('h4', null, '🤖 AI Assistant (CodeBuddy)'),
+        React.createElement('p', { style: { fontSize: '13px', color: 'var(--gray-500)', marginBottom: '12px' } }, 'CodeBuddy is an AI learning assistant that appears alongside coding assignments. It uses Google Gemini to help students with hints and explanations. Enter your Gemini API key below to activate it.'),
+        React.createElement('div', { className: 'form-group' },
+          React.createElement('label', { className: 'form-label' }, 'Gemini API Key'),
+          React.createElement('input', {
+            className: 'form-input',
+            type: 'password',
+            value: settingsApiKey,
+            onChange: e => setSettingsApiKey(e.target.value),
+            placeholder: 'AIza...',
+          }),
+        ),
+        React.createElement('div', { style: { display: 'flex', gap: '12px', alignItems: 'center' } },
+          React.createElement('button', {
+            className: 'btn btn-primary',
+            onClick: () => { setApiKey(settingsApiKey); alert('API key saved! CodeBuddy is now active.'); }
+          }, 'Save API Key'),
+          settingsApiKey && React.createElement('button', {
+            className: 'btn btn-secondary',
+            onClick: () => { setSettingsApiKey(''); setApiKey(''); }
+          }, 'Remove Key'),
+          getApiKey() && React.createElement('span', { className: 'badge badge-success' }, '✓ Key saved'),
+        ),
+        React.createElement('p', { style: { fontSize: '12px', color: 'var(--gray-400)', marginTop: '12px' } }, 'Get a free API key at ', React.createElement('a', { href: 'https://aistudio.google.com/apikey', target: '_blank', style: { color: 'var(--primary)' } }, 'aistudio.google.com/apikey'), '. The key is stored locally in your browser and never sent to our servers.'),
+      ),
+      React.createElement('div', { className: 'settings-section' },
+        React.createElement('h4', null, '🗑️ Data Management'),
+        React.createElement('p', { style: { fontSize: '13px', color: 'var(--gray-500)', marginBottom: '12px' } }, 'Reset all data back to the demo defaults. This will remove all custom courses, students, and submissions.'),
+        React.createElement('button', {
+          className: 'btn btn-danger',
+          onClick: () => { if (confirm('Are you sure? This will delete all custom data and reset to demo defaults.')) { localStorage.removeItem('codepath_lms_data'); window.location.reload(); } }
+        }, 'Reset All Data'),
+      ),
+    );
+  }
+
   // ─── Modals ───
   function renderModal() {
     if (!modal) return null;
@@ -1499,6 +1840,7 @@ function App() {
       case 'students': return renderStudents();
       case 'progress': return renderStudentProgress();
       case 'announcements': return renderAnnouncements();
+      case 'settings': return renderSettings();
       default: return renderDashboard();
     }
   }
